@@ -15,7 +15,7 @@ class CreateHousesTable extends Migration {
 		Schema::create('houses', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('zipcode_id')->unsigned();
+			$table->integer('user_id')->unsigned();
 			$table->string('address');
 			$table->string('type');
 			$table->integer('squaremeters');

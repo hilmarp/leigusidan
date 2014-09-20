@@ -2,22 +2,42 @@
 
 class HomeController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+	// Birta innskráningarformið
+	public function getInnskraning() {
 
-	public function showWelcome()
-	{
-		return View::make('hello');
+		return View::make('user.login');
+	}
+
+	// Skrá notanda inn í kerfið
+	public function postInnskraning() {
+
+		$v = Validator::make(Input::all(), User::$login_rules);
+
+		if ($v->fails()) {
+
+			return Redirect::action('HomeController@getInnskraning')->withInput()->withErrors($v);
+
+		} else {
+
+			if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')))) {
+
+				return Redirect::action('UserController@getIndex')->with('message', 'Notandi hefur verið skráður inn.');
+
+			} else {
+
+				return Redirect::action('HomeController@getInnskraning')->with('message', 'Netfang eða lykilorð var ekki rétt.')->withInput();
+
+			}
+
+		}
+	}
+
+	// Útskrá notanda
+	public function getUtskraning() {
+
+		Auth::logout();
+
+		return Redirect::action('HomeController@getInnskraning')->with('message', 'Notandi hefur verið skráður út.');
 	}
 
 }

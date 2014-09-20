@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('houses.index');
-});
+Route::get('/', 'HomeController@getInnskraning');
+
+Route::get('innskraning', 'HomeController@getInnskraning');
+Route::post('innskraning', 'HomeController@postInnskraning');
+Route::get('utskraning', 'HomeController@getUtskraning');
+
+Route::controller('notandi', 'UserController');

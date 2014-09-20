@@ -53,6 +53,17 @@
       </div>
     </div>
 
+    @if (Session::has('message'))
+      <div class="row">
+        <div class="small-12 columns">
+          <div data-alert class="alert-box">
+            {{ Session::get('message') }}
+            <a href="#" class="close">&times;</a>
+          </div>
+        </div>
+      </div>
+    @endif
+
     @yield('content')
 
     {{ HTML::script('assets/bower_components/jquery/dist/jquery.min.js') }}
